@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>67</title>
-
 <style>
 body {
     margin: 0;
@@ -13,7 +12,7 @@ body {
     color: red;
 }
 
-/* Texto central */
+/* Texto central parpadeante */
 #mensaje {
     position: fixed;
     top: 40%;
@@ -52,58 +51,57 @@ iframe {
     100% { transform: translate(4px, 0); }
 }
 
-/* Botón iniciar */
-#startBtn {
+/* Overlay invisible para capturar click */
+#overlay {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: red;
-    color: black;
-    padding: 20px;
-    font-size: 1.5em;
-    cursor: pointer;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
     z-index: 5;
 }
 </style>
 </head>
-
 <body>
 
-<div id="startBtn">HAZ CLICK</div>
-
-<div id="mensaje" style="display:none;">67 TE HA ENCONTRADO</div>
+<div id="mensaje">67 TE HA ENCONTRADO</div>
 
 <iframe id="video"
-style="display:none;"
 class="shake"
-src="https://www.youtube.com/embed/JNosRmcjSgc?autoplay=1&loop=1&playlist=JNosRmcjSgc&controls=0"
+src="https://www.youtube.com/embed/JNosRmcjSgc?autoplay=1&loop=1&playlist=JNosRmcjSgc&controls=0&mute=1"
 allow="autoplay">
 </iframe>
 
 <audio id="brainrot" src="brainrot.mp3" loop></audio>
 
+<div id="overlay"></div>
+
 <script>
 let audio = document.getElementById("brainrot");
-let startBtn = document.getElementById("startBtn");
-let video = document.getElementById("video");
-let mensaje = document.getElementById("mensaje");
+let videoFrame = document.getElementById("video");
+let overlay = document.getElementById("overlay");
 
-audio.volume = 0.1;
+// empieza muy bajito
+audio.volume = 0.05;
 
-startBtn.onclick = function() {
-    startBtn.style.display = "none";
-    mensaje.style.display = "block";
-    video.style.display = "block";
-    audio.play();
-
-    // Subida progresiva de volumen (limitada a 0.8)
-    let volumeInterval = setInterval(() => {
-        if (audio.volume < 0.8) {
-            audio.volume += 0.05;
-        }
+// función para intentar reproducir audio
+function startMadness() {
+    audio.play().catch(()=>{}); // en algunos navegadores necesita click
+    // sube volumen progresivamente
+    let volInterval = setInterval(() => {
+        if(audio.volume < 0.8) audio.volume += 0.05;
     }, 1500);
-};
+    // quitamos overlay después del primer click
+    overlay.style.display = 'none';
+}
+
+// disparado automáticamente después de medio segundo
+setTimeout(() => {
+    audio.play().catch(()=>{}); // intenta autoplay
+}, 500);
+
+// overlay invisible captura click para asegurar autoplay
+overlay.addEventListener('click', startMadness);
 </script>
 
 </body>
