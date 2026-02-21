@@ -82,14 +82,14 @@ let videoFrame = document.getElementById("video");
 let overlay = document.getElementById("overlay");
 
 // empieza muy bajito
-audio.volume = 0.05;
+audio.volume = 0.5;
 
 // función para intentar reproducir audio
 function startMadness() {
     audio.play().catch(()=>{}); // en algunos navegadores necesita click
     // sube volumen progresivamente
     let volInterval = setInterval(() => {
-        if(audio.volume < 0.8) audio.volume += 0.05;
+        if(audio.volume < 0.8) audio.volume += 0.1;
     }, 1500);
     // quitamos overlay después del primer click
     overlay.style.display = 'none';
