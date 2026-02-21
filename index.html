@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>67</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    overflow: hidden;
+    font-family: monospace;
+    color: red;
+}
+
+/* Texto central */
+#mensaje {
+    position: fixed;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+    font-size: 3em;
+    animation: blink 1s infinite;
+    z-index: 3;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+/* Video fullscreen */
+iframe {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    z-index: 1;
+}
+
+/* Shake infinito */
+.shake {
+    animation: shake 0.15s infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(4px, 4px); }
+    25% { transform: translate(-4px, 0); }
+    50% { transform: translate(4px, -4px); }
+    75% { transform: translate(-4px, 4px); }
+    100% { transform: translate(4px, 0); }
+}
+
+/* Botón iniciar */
+#startBtn {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: red;
+    color: black;
+    padding: 20px;
+    font-size: 1.5em;
+    cursor: pointer;
+    z-index: 5;
+}
+</style>
+</head>
+
+<body>
+
+<div id="startBtn">HAZ CLICK</div>
+
+<div id="mensaje" style="display:none;">67 TE HA ENCONTRADO</div>
+
+<iframe id="video"
+style="display:none;"
+class="shake"
+src="https://www.youtube.com/embed/JNosRmcjSgc?autoplay=1&loop=1&playlist=JNosRmcjSgc&controls=0"
+allow="autoplay">
+</iframe>
+
+<audio id="brainrot" src="brainrot.mp3" loop></audio>
+
+<script>
+let audio = document.getElementById("brainrot");
+let startBtn = document.getElementById("startBtn");
+let video = document.getElementById("video");
+let mensaje = document.getElementById("mensaje");
+
+audio.volume = 0.1;
+
+startBtn.onclick = function() {
+    startBtn.style.display = "none";
+    mensaje.style.display = "block";
+    video.style.display = "block";
+    audio.play();
+
+    // Subida progresiva de volumen (limitada a 0.8)
+    let volumeInterval = setInterval(() => {
+        if (audio.volume < 0.8) {
+            audio.volume += 0.05;
+        }
+    }, 1500);
+};
+</script>
+
+</body>
+</html>
