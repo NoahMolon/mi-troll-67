@@ -68,7 +68,7 @@ iframe {
 
 <iframe id="video"
 class="shake"
-src="https://www.youtube.com/embed/JNosRmcjSgc?autoplay=1&loop=1&playlist=JNosRmcjSgc&controls=0&mute=1"
+src="https://www.youtube.com/embed/JNosRmcjSgc?autoplay=1&loop=1&playlist=JNosRmcjSgc&controls=0"
 allow="autoplay">
 </iframe>
 
@@ -78,29 +78,27 @@ allow="autoplay">
 
 <script>
 let audio = document.getElementById("brainrot");
-let videoFrame = document.getElementById("video");
 let overlay = document.getElementById("overlay");
 
-// empieza muy bajito
+// Empieza alto pero progresivo
 audio.volume = 0.5;
 
-// función para intentar reproducir audio
+// Función para iniciar audio correctamente
 function startMadness() {
-    audio.play().catch(()=>{}); // en algunos navegadores necesita click
-    // sube volumen progresivamente
+    audio.play().catch(()=>{}); // desbloquea autoplay si es necesario
+    overlay.style.display = 'none'; // quitar overlay
+    // Subida progresiva de volumen
     let volInterval = setInterval(() => {
-        if(audio.volume < 0.8) audio.volume += 0.1;
+        if(audio.volume < 0.8) audio.volume += 0.05;
     }, 1500);
-    // quitamos overlay después del primer click
-    overlay.style.display = 'none';
 }
 
-// disparado automáticamente después de medio segundo
+// Intentar autoplay tras medio segundo
 setTimeout(() => {
-    audio.play().catch(()=>{}); // intenta autoplay
+    audio.play().catch(()=>{}); 
 }, 500);
 
-// overlay invisible captura click para asegurar autoplay
+// Capturar primer click invisible
 overlay.addEventListener('click', startMadness);
 </script>
 
